@@ -8,7 +8,7 @@ const multer = require('multer');
 const path = require('path');
 const {uuid} = require('uuidv4');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
