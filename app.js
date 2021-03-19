@@ -4,22 +4,42 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const compression = require('compression');
+const multer = require('multer');
+const path = require('path');
+const {uuid} = require('uuidv4');
 
 const PORT = process.env.PORT || 8080;
 
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        // cb(null, file.filename + '-' + file.originalname);
+        cb(null, uuid() + '-' + file.originalname);
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype === "image/png" || file.mimetype === "image/jpeg" || file.mimetype === "image/jpg"){
+        cb(null, true);
+    }else{
+        cb(null, false);
+    }
+}
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-gllbp.mongodb.net/${process.env.MONGO_DEFAULT_DB}`;;
 
 const app = express();
 
-const authRoutes = require('./routes/auth');
-const hotelRoutes = require('./routes/hotel');
-const bookingsRoutes = require('./routes/booking');
+const employeeRoutes = require('./routes/employee');
 
 app.use(compression());
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(multer({storage: fileStorage, fileFilter: fileFilter, limits: {fileSize: 10*1024*1024}}).single('image'));
+app.use('/images',express.static(path.join(__dirname, 'images')));
 
 // adding headers for allowing CORS
 app.use((req, res, next) => {
@@ -30,9 +50,7 @@ app.use((req, res, next) => {
 })
 
 
-app.use(authRoutes);
-app.use(hotelRoutes);
-app.use(bookingsRoutes);
+app.use(employeeRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
