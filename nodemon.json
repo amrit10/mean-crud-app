@@ -1,8 +1,0 @@
-{
-    "env": {
-        "MONGO_USER": "amrit",
-        "MONGO_PASSWORD": "7PsKbflyhmL9tU0F",
-        "MONGO_DEFAULT_DB": "zet_cc_amrit",
-        "JWT_KEY": "ifyoudonteatyourmeatyoucanthaveanypudding"
-    }
-}
