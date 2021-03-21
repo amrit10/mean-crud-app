@@ -18,12 +18,12 @@ Creates and adds one new employee to the db
 
    **Required:**
    
-   name = [string] <br />
-   dob = [date] <br />
-   salary = [numeric] <br />
-   skills = [string[]] - Can be empty array <br />
-   photo = [file] - jpg or png only. < 10 MB in size <br />
-   
+     name = [string] <br />
+     dob = [date] <br />
+     salary = [numeric] <br />
+     skills = [string[]] - Can be empty array <br />
+     photo = [file] - jpg or png only. < 10 MB in size <br />
+
     **Optional:**
     
     None
